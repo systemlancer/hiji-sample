@@ -1,7 +1,7 @@
 package com.example.gallerysample.models
 
-import android.database.Cursor
+import android.net.Uri
 
 interface GalleryModel {
-    fun createCursor(): Cursor?
+    fun getPhotoUriList(): MutableList<Uri>
 }

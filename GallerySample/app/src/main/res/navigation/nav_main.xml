@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_main"
-    app:startDestination="@id/gallery_fragment">
+    app:startDestination="@id/permission_fragment">
 
     <fragment
         android:id="@+id/permission_fragment"
@@ -12,5 +12,9 @@
     </fragment>
     <fragment
         android:id="@+id/gallery_fragment"
-        android:name="com.example.gallerysample.fragments.GalleryFragment"/>
+        android:name="com.example.gallerysample.fragments.GalleryFragment">
+        <action
+            android:id="@+id/action_gallery_fragment_to_permission_fragment"
+            app:destination="@id/permission_fragment" />
+    </fragment>
 </navigation>
