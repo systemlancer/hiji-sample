@@ -25,6 +25,7 @@ class GalleryFragment : Fragment() {
     ): View? {
         binding = FragmentGalleryBinding.inflate(inflater, container, false)
             .apply {
+                lifecycleOwner = viewLifecycleOwner
                 val photoList = viewModel.getPhotoUriList()
                 val photoListAdapter =
                     PhotoListAdapter(this@GalleryFragment, PhotoListAdapter.OnClickListener {

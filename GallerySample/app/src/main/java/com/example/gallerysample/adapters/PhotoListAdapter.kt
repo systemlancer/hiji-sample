@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gallerysample.R
 import com.example.gallerysample.databinding.ListItemPhotoBinding
 import com.example.gallerysample.utilities.GlideApp
 
@@ -43,7 +44,7 @@ class PhotoListAdapter(
             with(binding) {
                 GlideApp.with(fragment)
                     .load(uri)
-//                    .placeholder(R.drawable.loading_animation)
+                    .placeholder(R.drawable.loading_animation)
                     .dontAnimate()
                     .into(photoImage)
                 executePendingBindings()
