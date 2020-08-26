@@ -4,6 +4,13 @@
     app:startDestination="@id/gallery_fragment">
 
     <fragment
+        android:id="@+id/permission_fragment"
+        android:name="com.example.gallerysample.fragments.PermissionsFragment">
+        <action
+            android:id="@+id/action_permission_fragment_to_gallery_fragment"
+            app:destination="@id/gallery_fragment" />
+    </fragment>
+    <fragment
         android:id="@+id/gallery_fragment"
         android:name="com.example.gallerysample.fragments.GalleryFragment"/>
 </navigation>
