@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.gallerysample.R
 import com.example.gallerysample.databinding.ItemPhotoBinding
+import com.example.gallerysample.listeners.requestListener
 
 class PhotoAdapter(
     private val photoUriList: MutableList<Uri>
@@ -34,8 +34,10 @@ class PhotoAdapter(
 
         internal fun bind(uri: Uri) {
             with(binding.photoImage) {
-//                Glide.with(context).load(uri).placeholder(R.drawable.loading_animation).into(this)
-                Glide.with(context).load(uri).into(this)
+                Glide.with(context)
+                    .load(uri)
+                    .listener(requestListener)
+                    .into(this)
             }
         }
     }

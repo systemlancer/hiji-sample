@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.gallerysample.R
 import com.example.gallerysample.databinding.ListItemPhotoBinding
+import com.example.gallerysample.listeners.requestListener
 
 class PhotoListAdapter(
     private val onClickListener: OnClickListener
@@ -34,6 +35,8 @@ class PhotoListAdapter(
             with(binding) {
                 Glide.with(binding.photoImage.context)
                     .load(uri)
+//                    .override(300)
+                    .listener(requestListener)
                     .placeholder(R.drawable.loading_animation)
                     .into(binding.photoImage)
                 executePendingBindings()
