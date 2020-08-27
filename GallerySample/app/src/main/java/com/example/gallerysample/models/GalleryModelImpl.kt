@@ -4,6 +4,7 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.MediaStore
+import timber.log.Timber
 
 class GalleryModelImpl(private val context: Context) : GalleryModel {
 
@@ -11,17 +12,29 @@ class GalleryModelImpl(private val context: Context) : GalleryModel {
         val cursor = createCursor()
 
         val mediaList = mutableListOf<Uri>()
-        cursor?.use {
-            val idColumn = it.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)
-            while (it.moveToNext()) {
-                val id = it.getLong(idColumn)
+        cursor?.use { cursor ->
+            val idColumn = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)
+            Timber.d("gallery count ${cursor.count}")
+            while (cursor.moveToNext()) {
+//                Timber.d(
+//                    "gallery column start -----------------------------------------------"
+//                )
+//                cursor.columnNames.forEach {
+//                    Timber.d(
+//                        "gallery $it ${cursor.getString(cursor.getColumnIndexOrThrow(it))}"
+//                    )
+//                }
+//                Timber.d(
+//                    "gallery column end -----------------------------------------------"
+//                )
+                val id = cursor.getLong(idColumn)
                 val contentUri = Uri.withAppendedPath(
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                     id.toString()
                 )
                 mediaList.add(contentUri)
             }
-            it.close()
+            cursor.close()
         }
 
         return mediaList
@@ -32,13 +45,15 @@ class GalleryModelImpl(private val context: Context) : GalleryModel {
             MediaStore.MediaColumns._ID,
             MediaStore.MediaColumns.DISPLAY_NAME
         )
-        val selection: String? = "${MediaStore.MediaColumns.MIME_TYPE} = ?"
+        val selection: String? =
+            "${MediaStore.MediaColumns.MIME_TYPE} = ?"
         val selectionArgs: Array<String>? = arrayOf("image/jpeg")
-        val sortOrder = "${MediaStore.MediaColumns.DISPLAY_NAME} DESC"
+        val sortOrder = "${MediaStore.MediaColumns.DATE_ADDED} DESC"
 
         return context.contentResolver.query(
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
             projection,
+//            null,
             selection,
             selectionArgs,
             sortOrder

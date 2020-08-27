@@ -69,6 +69,9 @@ dependencies {
     }
     annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
 
+    // timber
+    implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
+
     testImplementation "junit:junit:$rootProject.junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.testExtJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoCoreVersion"
