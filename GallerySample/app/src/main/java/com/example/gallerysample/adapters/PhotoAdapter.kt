@@ -4,10 +4,9 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.gallerysample.R
 import com.example.gallerysample.databinding.ItemPhotoBinding
-import com.facebook.drawee.backends.pipeline.Fresco
-import com.facebook.imagepipeline.common.ResizeOptions
-import com.facebook.imagepipeline.request.ImageRequestBuilder
 
 class PhotoAdapter(
     private val photoUriList: MutableList<Uri>
@@ -35,16 +34,8 @@ class PhotoAdapter(
 
         internal fun bind(uri: Uri) {
             with(binding.photoImage) {
-                val request = ImageRequestBuilder.newBuilderWithSource(uri)
-                    .setProgressiveRenderingEnabled(true)
-//                    .setResizeOptions(ResizeOptions(50, 50))
-                    .build()
-                val controller = Fresco.newDraweeControllerBuilder()
-                    .setOldController(this.controller)
-                    .setImageRequest(request)
-                    .build()
-                setImageURI(uri, context)
-                this.controller = controller
+//                Glide.with(context).load(uri).placeholder(R.drawable.loading_animation).into(this)
+                Glide.with(context).load(uri).into(this)
             }
         }
     }

@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data />
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/photo_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:background="@color/black"
         android:contentDescription="@string/photo"
-        android:scaleType="centerCrop"
-        fresco:placeholderImage="@drawable/loading_animation" />
+        android:scaleType="centerCrop" />
 </layout>
