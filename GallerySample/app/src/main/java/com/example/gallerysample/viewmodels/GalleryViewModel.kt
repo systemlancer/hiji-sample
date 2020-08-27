@@ -4,9 +4,8 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import com.example.gallerysample.models.GalleryModel
 
-class GalleryViewModel(private val galleryModel: GalleryModel) : ViewModel(),
-    GalleryModel by galleryModel {
+class GalleryViewModel(galleryModel: GalleryModel) : ViewModel() {
 
-    val uriList: MutableList<Uri> = getPhotoUriList()
+    val uriList: MutableList<Uri> = galleryModel.getPhotoUriList()
 
 }

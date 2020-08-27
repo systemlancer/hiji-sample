@@ -3,12 +3,10 @@ package com.example.gallerysample.adapters
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gallerysample.databinding.ItemPhotoBinding
 
 class PhotoAdapter(
-    private val fragment: Fragment,
     private val photoUriList: MutableList<Uri>
 ) :
     RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
@@ -19,7 +17,7 @@ class PhotoAdapter(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ), fragment
+            )
         )
     }
 
@@ -29,11 +27,13 @@ class PhotoAdapter(
         viewHolder.bind(photoUriList[position])
     }
 
-    class PhotoViewHolder(val binding: ItemPhotoBinding, private val fragment: Fragment) :
+    class PhotoViewHolder(private val binding: ItemPhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         internal fun bind(uri: Uri) {
-            binding.photoImage.setImageURI(uri, fragment)
+            with(binding.photoImage) {
+                setImageURI(uri, context)
+            }
         }
     }
 }

@@ -12,7 +12,7 @@ import com.example.gallerysample.databinding.FragmentGalleryDetailBinding
 import com.example.gallerysample.utilities.InjectorUtils
 import com.example.gallerysample.viewmodels.GalleryViewModel
 
-class GalleryDetailFragment: Fragment() {
+class GalleryDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentGalleryDetailBinding
     private val galleryViewModel: GalleryViewModel by activityViewModels {
@@ -27,7 +27,7 @@ class GalleryDetailFragment: Fragment() {
     ): View? {
         binding = FragmentGalleryDetailBinding.inflate(inflater, container, false)
             .apply {
-                val photoAdapter = PhotoAdapter(this@GalleryDetailFragment, galleryViewModel.uriList)
+                val photoAdapter = PhotoAdapter(galleryViewModel.uriList)
                 viewPager.adapter = photoAdapter
                 viewPager.currentItem = args.selectedPosition
             }
