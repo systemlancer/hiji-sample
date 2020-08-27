@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.gallerysample.adapters.PhotoListAdapter
 import com.example.gallerysample.databinding.FragmentGalleryBinding
 import com.example.gallerysample.utilities.InjectorUtils
@@ -14,7 +16,7 @@ import com.example.gallerysample.viewmodels.GalleryViewModel
 class GalleryFragment : Fragment() {
 
     private lateinit var binding: FragmentGalleryBinding
-    private val viewModel: GalleryViewModel by viewModels {
+    private val viewModel: GalleryViewModel by activityViewModels {
         InjectorUtils.provideGalleryViewModelFactory(requireContext())
     }
 
@@ -29,6 +31,7 @@ class GalleryFragment : Fragment() {
                 val photoList = viewModel.getPhotoUriList()
                 val photoListAdapter =
                     PhotoListAdapter(this@GalleryFragment, PhotoListAdapter.OnClickListener {
+                        findNavController().navigate(GalleryFragmentDirections.actionGalleryFragmentToGalleryDetailFragment(it))
                     })
 
                 photosGrid.adapter = photoListAdapter

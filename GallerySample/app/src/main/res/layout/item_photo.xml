@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto">
 
-    <data />
+    <data>
+
+    </data>
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/photo_image"
@@ -11,6 +13,5 @@
         android:adjustViewBounds="true"
         android:background="@color/black"
         android:contentDescription="@string/photo"
-        android:scaleType="centerCrop"
-        fresco:placeholderImage="@drawable/loading_animation" />
+        fresco:placeholderImage="@drawable/loading_animation"/>
 </layout>

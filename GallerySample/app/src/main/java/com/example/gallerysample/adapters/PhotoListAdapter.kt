@@ -1,6 +1,5 @@
 package com.example.gallerysample.adapters
 
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,14 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
-import com.example.gallerysample.R
 import com.example.gallerysample.databinding.ListItemPhotoBinding
-import com.example.gallerysample.utilities.GlideApp
-import timber.log.Timber
 
 class PhotoListAdapter(
     private val fragment: Fragment,
@@ -48,35 +40,7 @@ class PhotoListAdapter(
 
         fun bind(uri: Uri) {
             with(binding) {
-                GlideApp.with(fragment)
-                    .load(uri)
-                    .listener(object : RequestListener<Drawable> {
-                        override fun onLoadFailed(
-                            e: GlideException?,
-                            model: Any?,
-                            target: Target<Drawable>?,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            Timber.d("onLoadFailed")
-                            return false
-                        }
-
-                        override fun onResourceReady(
-                            resource: Drawable?,
-                            model: Any?,
-                            target: Target<Drawable>?,
-                            dataSource: DataSource?,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            Timber.d("onResourceReady")
-                            return false
-                        }
-
-
-                    })
-                    .placeholder(R.drawable.loading_animation)
-                    .dontAnimate()
-                    .into(photoImage)
+                photoImage.setImageURI(uri, fragment)
                 executePendingBindings()
             }
         }

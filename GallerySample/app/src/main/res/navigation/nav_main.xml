@@ -16,5 +16,16 @@
         <action
             android:id="@+id/action_gallery_fragment_to_permission_fragment"
             app:destination="@id/permission_fragment" />
+        <action
+            android:id="@+id/action_gallery_fragment_to_gallery_detail_fragment"
+            app:destination="@id/gallery_detail_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/gallery_detail_fragment"
+        android:name="com.example.gallerysample.fragments.GalleryDetailFragment">
+        <argument
+            android:name="selectedPosition"
+            app:argType="integer" />
     </fragment>
 </navigation>
