@@ -7,6 +7,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gallerysample.databinding.ListItemPhotoBinding
+import com.facebook.drawee.backends.pipeline.Fresco
+import com.facebook.imagepipeline.common.ResizeOptions
+import com.facebook.imagepipeline.request.ImageRequest
+import com.facebook.imagepipeline.request.ImageRequestBuilder
 
 class PhotoListAdapter(
     private val onClickListener: OnClickListener
@@ -30,7 +34,17 @@ class PhotoListAdapter(
 
         fun bind(uri: Uri) {
             with(binding) {
+                val request = ImageRequestBuilder.newBuilderWithSource(uri)
+//                    .setResizeOptions(ResizeOptions(50, 50))
+                    .setProgressiveRenderingEnabled(true)
+                    .build()
+                val controller = Fresco.newDraweeControllerBuilder()
+                    .setOldController(photoImage.controller)
+                    .setImageRequest(request)
+                    .build()
                 photoImage.setImageURI(uri, photoImage.context)
+                photoImage.controller = controller
+
                 executePendingBindings()
             }
         }

@@ -8,11 +8,10 @@ import timber.log.Timber
 class GallerySampleApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-//        val config = ImagePipelineConfig.newBuilder(applicationContext)
-//            .setDownsampleEnabled(true)
-//            .build()
-//        Fresco.initialize(applicationContext, config)
-        Fresco.initialize(applicationContext)
+        val config = ImagePipelineConfig.newBuilder(applicationContext)
+            .setDownsampleEnabled(true)
+            .build()
+        Fresco.initialize(applicationContext, config)
 
         Timber.plant(Timber.DebugTree())
     }
