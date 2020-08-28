@@ -24,8 +24,8 @@ buildscript {
         viewPagerVersion = '1.0.0'
         // test
         junitVersion = '4.13'
-        testExtJunitVersion = '1.1.1'
-        espressoCoreVersion = '3.2.0'
+        testExtJunitVersion = '1.1.2'
+        espressoCoreVersion = '3.3.0'
     }
 
     repositories {
