@@ -17,7 +17,7 @@
             android:adjustViewBounds="true"
             android:background="@color/black"
             android:contentDescription="@string/photo"
-            android:scaleType="fitCenter"/>
+            android:scaleType="centerInside"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

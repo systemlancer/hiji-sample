@@ -30,6 +30,7 @@ class GalleryFragment : Fragment() {
                 val photoList = viewModel.uriList
                 val photoListAdapter =
                     PhotoListAdapter(PhotoListAdapter.OnClickListener {
+                        viewModel.clear()
                         findNavController().navigate(
                             GalleryFragmentDirections.actionGalleryFragmentToGalleryDetailFragment(
                                 it

@@ -33,4 +33,9 @@ class GalleryDetailFragment : Fragment() {
             }
         return binding.root
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        galleryViewModel.clear()
+    }
 }

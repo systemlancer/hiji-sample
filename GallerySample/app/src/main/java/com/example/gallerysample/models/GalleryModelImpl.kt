@@ -4,6 +4,7 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.MediaStore
+import com.bumptech.glide.Glide
 import timber.log.Timber
 
 class GalleryModelImpl(private val context: Context) : GalleryModel {
@@ -38,6 +39,14 @@ class GalleryModelImpl(private val context: Context) : GalleryModel {
         }
 
         return mediaList
+    }
+
+    override fun clearMemory() {
+        Glide.get(context).clearMemory()
+    }
+
+    override suspend fun clearDiskCache() {
+        Glide.get(context).clearDiskCache()
     }
 
     private fun createCursor(): Cursor? {
