@@ -16,8 +16,7 @@
             android:layout_gravity="center"
             android:adjustViewBounds="true"
             android:background="@color/black"
-            android:contentDescription="@string/photo"
-            android:scaleType="centerInside"/>
+            android:contentDescription="@string/photo"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

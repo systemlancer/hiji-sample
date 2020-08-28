@@ -37,6 +37,7 @@ class PhotoAdapter(
                 Glide.with(context)
                     .load(uri)
                     .listener(requestListener)
+                    .centerInside()
                     .into(this)
             }
         }

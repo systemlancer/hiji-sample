@@ -35,7 +35,7 @@ class PhotoListAdapter(
             with(binding) {
                 Glide.with(binding.photoImage.context)
                     .load(uri)
-//                    .override(300)
+                    .centerCrop()
                     .listener(requestListener)
                     .placeholder(R.drawable.loading_animation)
                     .into(binding.photoImage)
