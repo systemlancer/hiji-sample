@@ -3,8 +3,8 @@ package com.example.gallerysample.adapters
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.gallerysample.R
@@ -14,7 +14,7 @@ import com.example.gallerysample.listeners.requestListener
 class PhotoListAdapter(
     private val onClickListener: OnClickListener
 ) :
-    ListAdapter<Uri, PhotoListAdapter.UriViewHolder>(DiffCallback) {
+    PagedListAdapter<Uri, PhotoListAdapter.UriViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UriViewHolder {
         return UriViewHolder(ListItemPhotoBinding.inflate(LayoutInflater.from(parent.context)))
@@ -22,10 +22,12 @@ class PhotoListAdapter(
 
     override fun onBindViewHolder(holder: UriViewHolder, position: Int) {
         val uri = getItem(position)
-        holder.itemView.setOnClickListener {
-            onClickListener.onClick(position)
-        }
-        holder.bind(uri)
+            ?.apply {
+                holder.itemView.setOnClickListener {
+                    onClickListener.onClick(position)
+                }
+                holder.bind(this)
+            }
     }
 
     class UriViewHolder(private val binding: ListItemPhotoBinding) :

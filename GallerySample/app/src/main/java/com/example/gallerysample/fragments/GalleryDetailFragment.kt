@@ -15,8 +15,11 @@ import com.example.gallerysample.viewmodels.GalleryViewModel
 class GalleryDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentGalleryDetailBinding
-    private val galleryViewModel: GalleryViewModel by activityViewModels {
-        InjectorUtils.provideGalleryViewModelFactory(requireContext())
+    private val viewModel: GalleryViewModel by activityViewModels {
+        InjectorUtils.provideGalleryViewModelFactory(
+            requireActivity().application,
+            requireContext()
+        )
     }
     private val args: GalleryDetailFragmentArgs by navArgs()
 
@@ -25,17 +28,34 @@ class GalleryDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        var photoAdapter: PhotoAdapter? = null
         binding = FragmentGalleryDetailBinding.inflate(inflater, container, false)
             .apply {
-                val photoAdapter = PhotoAdapter(galleryViewModel.uriList)
-                viewPager.adapter = photoAdapter
-                viewPager.currentItem = args.selectedPosition
+                lifecycleOwner = viewLifecycleOwner
             }
+
+        viewModel.uriList.observe(viewLifecycleOwner) { photoUriList ->
+            photoAdapter.let {
+                if (it == null) {
+                    photoAdapter = PhotoAdapter(photoUriList)
+                    binding.viewPager.apply {
+                        adapter = photoAdapter
+                        currentItem = args.selectedPosition
+                    }
+                } else {
+                    it.photoUriList = photoUriList
+                    it.notifyDataSetChanged()
+                }
+            }
+
+        }
+
+
         return binding.root
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        galleryViewModel.clear()
+        viewModel.clear()
     }
 }

@@ -16,7 +16,10 @@ class GalleryFragment : Fragment() {
 
     private lateinit var binding: FragmentGalleryBinding
     private val viewModel: GalleryViewModel by activityViewModels {
-        InjectorUtils.provideGalleryViewModelFactory(requireContext())
+        InjectorUtils.provideGalleryViewModelFactory(
+            requireActivity().application,
+            requireContext()
+        )
     }
 
     override fun onCreateView(
@@ -24,11 +27,11 @@ class GalleryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        var photoListAdapter: PhotoListAdapter
         binding = FragmentGalleryBinding.inflate(inflater, container, false)
             .apply {
                 lifecycleOwner = viewLifecycleOwner
-                val photoList = viewModel.uriList
-                val photoListAdapter =
+                photoListAdapter =
                     PhotoListAdapter(PhotoListAdapter.OnClickListener {
                         viewModel.clear()
                         findNavController().navigate(
@@ -39,8 +42,13 @@ class GalleryFragment : Fragment() {
                     })
 
                 photosGrid.adapter = photoListAdapter
-                photoListAdapter.submitList(photoList)
+                viewModel.loadPhotoUris()
             }
+
+        viewModel.uriList.observe(viewLifecycleOwner) {
+            photoListAdapter.submitList(it)
+        }
+
         return binding.root
     }
 }

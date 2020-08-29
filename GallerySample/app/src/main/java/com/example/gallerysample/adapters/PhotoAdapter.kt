@@ -3,13 +3,14 @@ package com.example.gallerysample.adapters
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.gallerysample.databinding.ItemPhotoBinding
 import com.example.gallerysample.listeners.requestListener
 
 class PhotoAdapter(
-    private val photoUriList: MutableList<Uri>
+    var photoUriList: PagedList<Uri>
 ) :
     RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
 
@@ -26,7 +27,9 @@ class PhotoAdapter(
     override fun getItemCount(): Int = photoUriList.size
 
     override fun onBindViewHolder(viewHolder: PhotoViewHolder, position: Int) {
-        viewHolder.bind(photoUriList[position])
+        photoUriList[position]?.let {
+            viewHolder.bind(it)
+        }
     }
 
     class PhotoViewHolder(private val binding: ItemPhotoBinding) :
