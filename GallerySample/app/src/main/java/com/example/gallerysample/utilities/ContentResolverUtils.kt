@@ -38,6 +38,15 @@ fun ContentResolver.getPhotoUriList(limit: Int, offset: Int): MutableList<Uri> {
     return mediaList
 }
 
+fun ContentResolver.deletePhoto(uri: Uri): Boolean {
+    var hasDeletedPhoto = false
+    val deletedRows = delete(uri, null, null)
+    if (deletedRows > 0) {
+        hasDeletedPhoto = true
+    }
+    return hasDeletedPhoto
+}
+
 private fun ContentResolver.createCursor(limit: Int, offset: Int): Cursor? {
     val projection = arrayOf(
         MediaStore.MediaColumns._ID,

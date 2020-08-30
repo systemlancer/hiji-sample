@@ -7,6 +7,7 @@ import com.example.gallerysample.utilities.getPhotoUriList
 
 class GalleryDataSource(private val contentResolver: ContentResolver) :
     PositionalDataSource<Uri>() {
+
     override fun loadInitial(params: LoadInitialParams, callback: LoadInitialCallback<Uri>) {
         callback.onResult(
             contentResolver.getPhotoUriList(

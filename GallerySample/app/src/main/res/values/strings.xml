@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">ギャラリーサンプル</string>
     <string name="photo">フォト</string>
+    <string name="yes">はい</string>
+    <string name="cancel">キャンセル</string>
+    <string name="confirm">確認</string>
+    <string name="delete_message">この画像を削除しますか?</string>
 </resources>

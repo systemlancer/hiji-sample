@@ -10,7 +10,8 @@ import com.example.gallerysample.databinding.ItemPhotoBinding
 import com.example.gallerysample.listeners.requestListener
 
 class PhotoAdapter(
-    var photoUriList: PagedList<Uri>
+    var photoUriList: PagedList<Uri>,
+    private val deleteOnClickListener: DeleteOnClickListener
 ) :
     RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
 
@@ -27,12 +28,16 @@ class PhotoAdapter(
     override fun getItemCount(): Int = photoUriList.size
 
     override fun onBindViewHolder(viewHolder: PhotoViewHolder, position: Int) {
-        photoUriList[position]?.let {
-            viewHolder.bind(it)
+
+        photoUriList[position]?.let { photoUri ->
+            viewHolder.bind(photoUri)
+            viewHolder.binding.deleteButton.setOnClickListener {
+                deleteOnClickListener.onClick(photoUri)
+            }
         }
     }
 
-    class PhotoViewHolder(private val binding: ItemPhotoBinding) :
+    class PhotoViewHolder(val binding: ItemPhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         internal fun bind(uri: Uri) {
@@ -44,5 +49,9 @@ class PhotoAdapter(
                     .into(this)
             }
         }
+    }
+
+    class DeleteOnClickListener(val clickListener: (uri: Uri) -> Unit) {
+        fun onClick(uri: Uri) = clickListener(uri)
     }
 }

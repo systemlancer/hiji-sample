@@ -31,7 +31,25 @@ class GalleryViewModel(
         uriList = LivePagedListBuilder<Int, Uri>(
             GalleryDataSourceFactory(contentResolver),
             config
-        ).build()
+        )
+            .setBoundaryCallback(object : PagedList.BoundaryCallback<Uri>() {
+                override fun onZeroItemsLoaded() {
+                    super.onZeroItemsLoaded()
+                }
+
+                override fun onItemAtFrontLoaded(itemAtFront: Uri) {
+                    super.onItemAtFrontLoaded(itemAtFront)
+                }
+
+                override fun onItemAtEndLoaded(itemAtEnd: Uri) {
+                    super.onItemAtEndLoaded(itemAtEnd)
+                }
+            })
+            .build()
+    }
+
+    fun invalidateDataSource() {
+        uriList.value?.dataSource?.invalidate()
     }
 
 
