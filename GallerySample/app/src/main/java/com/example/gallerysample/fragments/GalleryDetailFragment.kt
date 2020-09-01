@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.gallerysample.adapters.PhotoDetailAdapter
 import com.example.gallerysample.databinding.FragmentGalleryDetailBinding
@@ -26,24 +28,34 @@ class GalleryDetailFragment : Fragment() {
         val binding = FragmentGalleryDetailBinding.inflate(inflater, container, false)
             .apply {
                 lifecycleOwner = viewLifecycleOwner
-                photoDetailAdapter = PhotoDetailAdapter(PhotoDetailAdapter.DeleteOnClickListener {
-                    activity?.let { galleryActivity ->
-                        PhotoDeleteDialog(it).show(
-                            galleryActivity.supportFragmentManager,
-                            null
-                        )
-                    }
-                })
+                photoDetailAdapter = PhotoDetailAdapter(
+                    args.selectedPosition,
+                    PhotoDetailAdapter.DeleteOnClickListener {
+                        activity?.let { galleryActivity ->
+                            PhotoDeleteDialog(it).show(
+                                galleryActivity.supportFragmentManager,
+                                null
+                            )
+                        }
+                    })
 
                 photoDetailAdapter.submitList(viewModel.uriList.value)
                 viewPager.adapter = photoDetailAdapter
-                viewPager.currentItem = args.selectedPosition
+                viewPager.setCurrentItem(args.selectedPosition, false)
             }
 
         viewModel.apply {
             uriList.observe(viewLifecycleOwner) {
                 photoDetailAdapter.submitList(it)
             }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().navigate(
+                GalleryDetailFragmentDirections.actionGalleryDetailFragmentToGalleryFragment(
+                    binding.viewPager.currentItem
+                )
+            )
         }
 
         return binding.root

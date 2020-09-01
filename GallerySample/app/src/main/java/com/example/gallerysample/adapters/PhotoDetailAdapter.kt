@@ -4,6 +4,7 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.AsyncPagedListDiffer
+import androidx.paging.PagedList
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.DiffUtil
@@ -14,6 +15,7 @@ import com.example.gallerysample.databinding.ItemPhotoBinding
 import com.example.gallerysample.listeners.requestListener
 
 class PhotoDetailAdapter(
+    private val selectedPosition:Int,
     private val deleteOnClickListener: DeleteOnClickListener
 ) :
     PagedListAdapter<Uri, PhotoDetailAdapter.UriViewHolder>(DiffCallback) {
@@ -47,10 +49,18 @@ class PhotoDetailAdapter(
         )
     }
 
+    override fun getItemCount(): Int {
+        return differ.itemCount
+    }
+
     override fun onBindViewHolder(holder: UriViewHolder, position: Int) {
-        getItem(position)?.let {
+        differ.getItem(position)?.let {
             holder.bind(it)
         }
+    }
+
+    override fun submitList(pagedList: PagedList<Uri>?) {
+        differ.submitList(pagedList)
     }
 
     class UriViewHolder(

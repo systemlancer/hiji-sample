@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.gallerysample.adapters.PhotoListAdapter
 import com.example.gallerysample.databinding.FragmentGalleryBinding
 import com.example.gallerysample.utilities.InjectorUtils
@@ -17,6 +18,7 @@ class GalleryFragment : Fragment() {
     private val viewModel: GalleryViewModel by activityViewModels {
         InjectorUtils.provideGalleryViewModelFactory(requireContext())
     }
+    private val args: GalleryFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +39,7 @@ class GalleryFragment : Fragment() {
                         )
                     })
 
+                photosGrid.layoutManager?.scrollToPosition(args.position)
                 photosGrid.adapter = photoListAdapter
             }
 
