@@ -29,7 +29,6 @@ class GalleryDetailFragment : Fragment() {
             .apply {
                 lifecycleOwner = viewLifecycleOwner
                 photoDetailAdapter = PhotoDetailAdapter(
-                    args.selectedPosition,
                     PhotoDetailAdapter.DeleteOnClickListener {
                         activity?.let { galleryActivity ->
                             PhotoDeleteDialog(it).show(

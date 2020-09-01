@@ -17,24 +17,30 @@ class PhotoListAdapter(
     PagedListAdapter<Uri, PhotoListAdapter.UriViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UriViewHolder {
-        return UriViewHolder(ListItemPhotoBinding.inflate(LayoutInflater.from(parent.context)))
+        return UriViewHolder(
+            ListItemPhotoBinding.inflate(LayoutInflater.from(parent.context)),
+            onClickListener
+        )
     }
 
     override fun onBindViewHolder(holder: UriViewHolder, position: Int) {
         getItem(position)
             ?.apply {
-                holder.itemView.setOnClickListener {
-                    onClickListener.onClick(position)
-                }
                 holder.bind(this)
             }
     }
 
-    class UriViewHolder(val binding: ListItemPhotoBinding) :
+    class UriViewHolder(
+        val binding: ListItemPhotoBinding,
+        private val onClickListener: OnClickListener
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(uri: Uri) {
             with(binding) {
+                binding.photoImage.setOnClickListener {
+                    onClickListener.onClick(uri.path)
+                }
                 Glide.with(binding.photoImage.context)
                     .load(uri)
                     .centerCrop()
@@ -50,15 +56,15 @@ class PhotoListAdapter(
 
     companion object DiffCallback : DiffUtil.ItemCallback<Uri>() {
         override fun areItemsTheSame(oldItem: Uri, newItem: Uri): Boolean {
-            return oldItem == newItem
+            return oldItem.path == newItem.path
         }
 
         override fun areContentsTheSame(oldItem: Uri, newItem: Uri): Boolean {
-            return oldItem.path == newItem.path
+            return oldItem == newItem
         }
     }
 
-    class OnClickListener(val clickListener: (position: Int) -> Unit) {
-        fun onClick(position: Int) = clickListener(position)
+    class OnClickListener(val clickListener: (path: String) -> Unit) {
+        fun onClick(path: String?) = path?.let { clickListener(it) }
     }
 }

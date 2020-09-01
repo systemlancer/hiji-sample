@@ -3,6 +3,7 @@ package com.example.gallerysample.data
 import android.content.ContentResolver
 import android.net.Uri
 import androidx.paging.PositionalDataSource
+import com.example.gallerysample.constants.PAGED_LIST_MAX_SIZE
 import com.example.gallerysample.utilities.getPhotoUriList
 
 class GalleryDataSource(private val contentResolver: ContentResolver) :
