@@ -30,15 +30,6 @@ class PhotoListAdapter(
             }
     }
 
-//    override fun onViewRecycled(holder: UriViewHolder) {
-//        super.onViewRecycled(holder)
-//        with(holder.binding.photoImage) {
-//            Glide.with(context).clear(this)
-//            setImageBitmap(null)
-//            setImageDrawable(null)
-//        }
-//    }
-
     class UriViewHolder(val binding: ListItemPhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -65,7 +56,6 @@ class PhotoListAdapter(
         override fun areContentsTheSame(oldItem: Uri, newItem: Uri): Boolean {
             return oldItem.path == newItem.path
         }
-
     }
 
     class OnClickListener(val clickListener: (position: Int) -> Unit) {

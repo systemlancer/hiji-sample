@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
-import com.example.gallerysample.adapters.PhotoAdapter
 import com.example.gallerysample.adapters.PhotoDetailAdapter
 import com.example.gallerysample.databinding.FragmentGalleryDetailBinding
 import com.example.gallerysample.dialogs.PhotoDeleteDialog
@@ -23,11 +22,11 @@ class GalleryDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var photoDetailAdapter: PhotoDetailAdapter? = null
+        val photoDetailAdapter: PhotoDetailAdapter
         val binding = FragmentGalleryDetailBinding.inflate(inflater, container, false)
             .apply {
                 lifecycleOwner = viewLifecycleOwner
-                photoDetailAdapter = PhotoDetailAdapter(PhotoAdapter.DeleteOnClickListener {
+                photoDetailAdapter = PhotoDetailAdapter(PhotoDetailAdapter.DeleteOnClickListener {
                     activity?.let { galleryActivity ->
                         PhotoDeleteDialog(it).show(
                             galleryActivity.supportFragmentManager,
@@ -40,6 +39,12 @@ class GalleryDetailFragment : Fragment() {
                 viewPager.adapter = photoDetailAdapter
                 viewPager.currentItem = args.selectedPosition
             }
+
+        viewModel.apply {
+            uriList.observe(viewLifecycleOwner) {
+                photoDetailAdapter.submitList(it)
+            }
+        }
 
         return binding.root
     }

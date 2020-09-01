@@ -11,7 +11,7 @@ import com.example.gallerysample.databinding.ItemPhotoBinding
 import com.example.gallerysample.listeners.requestListener
 
 class PhotoDetailAdapter(
-    private val deleteOnClickListener: PhotoAdapter.DeleteOnClickListener
+    private val deleteOnClickListener: DeleteOnClickListener
 ) :
     PagedListAdapter<Uri, PhotoDetailAdapter.UriViewHolder>(DiffCallback) {
 
@@ -34,18 +34,9 @@ class PhotoDetailAdapter(
         }
     }
 
-//    override fun onViewRecycled(holder: UriViewHolder) {
-//        super.onViewRecycled(holder)
-//        with(holder.binding.photoImage) {
-//            Glide.with(context).clear(this)
-//            setImageDrawable(null)
-//            setImageBitmap(null)
-//        }
-//    }
-
     class UriViewHolder(
         val binding: ItemPhotoBinding,
-        private val deleteOnClickListener: PhotoAdapter.DeleteOnClickListener
+        private val deleteOnClickListener: DeleteOnClickListener
     ) :
         RecyclerView.ViewHolder(binding.root) {
 

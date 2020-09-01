@@ -15,9 +15,7 @@ import com.example.gallerysample.viewmodels.GalleryViewModel
 class GalleryFragment : Fragment() {
 
     private val viewModel: GalleryViewModel by activityViewModels {
-        InjectorUtils.provideGalleryViewModelFactory(
-            requireContext()
-        )
+        InjectorUtils.provideGalleryViewModelFactory(requireContext())
     }
 
     override fun onCreateView(
@@ -25,7 +23,7 @@ class GalleryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var photoListAdapter: PhotoListAdapter
+        val photoListAdapter: PhotoListAdapter
         val binding = FragmentGalleryBinding.inflate(inflater, container, false)
             .apply {
                 lifecycleOwner = viewLifecycleOwner
@@ -43,7 +41,6 @@ class GalleryFragment : Fragment() {
             }
 
         viewModel.apply {
-
             uriList.observe(viewLifecycleOwner) {
                 photoListAdapter.submitList(it)
             }
@@ -51,14 +48,4 @@ class GalleryFragment : Fragment() {
 
         return binding.root
     }
-
-//    override fun onResume() {
-//        super.onResume()
-//        binding.photosGrid.adapter?.registerAdapterDataObserver(viewModel.adapterDataObserver)
-//    }
-//
-//    override fun onPause() {
-//        super.onPause()
-//        binding.photosGrid.adapter?.unregisterAdapterDataObserver(viewModel.adapterDataObserver)
-//    }
 }

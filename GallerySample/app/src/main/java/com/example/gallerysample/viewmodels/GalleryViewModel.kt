@@ -29,20 +29,7 @@ class GalleryViewModel(
 
 
         uriList =
-            LivePagedListBuilder<Int, Uri>(GalleryDataSourceFactory(contentResolver), config)
-                .setBoundaryCallback(object : PagedList.BoundaryCallback<Uri>() {
-                    override fun onZeroItemsLoaded() {
-                        super.onZeroItemsLoaded()
-                    }
-
-                    override fun onItemAtFrontLoaded(itemAtFront: Uri) {
-                        super.onItemAtFrontLoaded(itemAtFront)
-                    }
-
-                    override fun onItemAtEndLoaded(itemAtEnd: Uri) {
-                        super.onItemAtEndLoaded(itemAtEnd)
-                    }
-                })
+            LivePagedListBuilder(GalleryDataSourceFactory(contentResolver), config)
                 .build()
     }
 
