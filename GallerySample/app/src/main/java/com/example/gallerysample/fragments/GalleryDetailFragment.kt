@@ -7,25 +7,22 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.OnLifecycleEvent
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.example.gallerysample.adapters.PhotoAdapter
 import com.example.gallerysample.adapters.PhotoDetailAdapter
 import com.example.gallerysample.databinding.FragmentGalleryDetailBinding
 import com.example.gallerysample.dialogs.PhotoDeleteDialog
-import com.example.gallerysample.utilities.InjectorUtils
 import com.example.gallerysample.viewmodels.GalleryViewModel
+import timber.log.Timber
 
 class GalleryDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentGalleryDetailBinding
-    private val viewModel: GalleryViewModel by activityViewModels {
-        InjectorUtils.provideGalleryViewModelFactory(
-            requireActivity().application,
-            requireContext()
-        )
-    }
+    private val viewModel: GalleryViewModel by activityViewModels()
     private val args: GalleryDetailFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -45,15 +42,11 @@ class GalleryDetailFragment : Fragment() {
                         )
                     }
                 })
-                val pagerSnapHelper = PagerSnapHelper()
-                pagerSnapHelper.attachToRecyclerView(viewPager)
-                viewPager.adapter = photoDetailAdapter
-                viewPager.layoutManager?.scrollToPosition(args.selectedPosition)
-            }
 
-        viewModel.uriList.observe(viewLifecycleOwner) { photoUriList ->
-            photoDetailAdapter?.submitList(photoUriList)
-        }
+                photoDetailAdapter?.submitList(viewModel.uriList.value)
+                viewPager.adapter = photoDetailAdapter
+                viewPager.currentItem = args.selectedPosition
+            }
 
         requireActivity().onBackPressedDispatcher.addCallback {
             viewModel.clear()
@@ -68,8 +61,17 @@ class GalleryDetailFragment : Fragment() {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        binding.viewPager.adapter?.registerAdapterDataObserver(viewModel.adapterDataObserver)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        binding.viewPager.adapter?.unregisterAdapterDataObserver(viewModel.adapterDataObserver)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        viewModel.clear()
     }
 }

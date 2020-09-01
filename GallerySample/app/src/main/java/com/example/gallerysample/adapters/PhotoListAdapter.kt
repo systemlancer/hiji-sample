@@ -30,7 +30,16 @@ class PhotoListAdapter(
             }
     }
 
-    class UriViewHolder(private val binding: ListItemPhotoBinding) :
+    override fun onViewRecycled(holder: UriViewHolder) {
+        super.onViewRecycled(holder)
+        with(holder.binding.photoImage) {
+            Glide.with(context).clear(this)
+            setImageBitmap(null)
+            setImageDrawable(null)
+        }
+    }
+
+    class UriViewHolder(val binding: ListItemPhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(uri: Uri) {
@@ -40,6 +49,7 @@ class PhotoListAdapter(
                     .centerCrop()
                     .listener(requestListener)
                     .placeholder(R.drawable.loading_animation)
+                    .dontAnimate()
                     .into(binding.photoImage)
                 executePendingBindings()
             }

@@ -7,7 +7,6 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.gallerysample.R
 import com.example.gallerysample.databinding.ItemPhotoBinding
 import com.example.gallerysample.listeners.requestListener
 
@@ -23,11 +22,8 @@ class PhotoDetailAdapter(
         viewType: Int
     ): UriViewHolder {
         return UriViewHolder(
-            ItemPhotoBinding.inflate(
-                LayoutInflater.from(
-                    parent.context
-                )
-            ), deleteOnClickListener
+            ItemPhotoBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+            deleteOnClickListener
         )
     }
 
@@ -38,8 +34,17 @@ class PhotoDetailAdapter(
         }
     }
 
+    override fun onViewRecycled(holder: UriViewHolder) {
+        super.onViewRecycled(holder)
+        with(holder.binding.photoImage) {
+            Glide.with(context).clear(this)
+            setImageDrawable(null)
+            setImageBitmap(null)
+        }
+    }
+
     class UriViewHolder(
-        private val binding: ItemPhotoBinding,
+        val binding: ItemPhotoBinding,
         private val deleteOnClickListener: PhotoAdapter.DeleteOnClickListener
     ) :
         RecyclerView.ViewHolder(binding.root) {
@@ -53,7 +58,8 @@ class PhotoDetailAdapter(
                     .load(uri)
                     .centerInside()
                     .listener(requestListener)
-                    .placeholder(R.drawable.loading_animation)
+                    .dontAnimate()
+                    .dontTransform()
                     .into(binding.photoImage)
                 executePendingBindings()
             }

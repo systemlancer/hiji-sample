@@ -33,23 +33,27 @@ class GalleryFragment : Fragment() {
         binding = FragmentGalleryBinding.inflate(inflater, container, false)
             .apply {
                 lifecycleOwner = viewLifecycleOwner
+
                 photoListAdapter =
-                    PhotoListAdapter(PhotoListAdapter.OnClickListener {
+                    PhotoListAdapter(PhotoListAdapter.OnClickListener { position ->
                         viewModel.clear()
                         findNavController().navigate(
                             GalleryFragmentDirections.actionGalleryFragmentToGalleryDetailFragment(
-                                it
+                                position
                             )
                         )
                     })
 
                 photosGrid.adapter = photoListAdapter
-                viewModel.loadPhotoUris()
                 photosGrid.layoutManager?.scrollToPosition(args.position)
             }
 
-        viewModel.uriList.observe(viewLifecycleOwner) {
-            photoListAdapter.submitList(it)
+        viewModel.apply {
+
+            uriList.observe(viewLifecycleOwner) {
+                photoListAdapter.submitList(it)
+                viewModel.clear()
+            }
         }
 
         return binding.root
@@ -57,5 +61,11 @@ class GalleryFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        binding.photosGrid.adapter?.registerAdapterDataObserver(viewModel.adapterDataObserver)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.photosGrid.adapter?.unregisterAdapterDataObserver(viewModel.adapterDataObserver)
     }
 }

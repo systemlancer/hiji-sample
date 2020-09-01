@@ -8,7 +8,7 @@
         android:name="com.example.gallerysample.fragments.PermissionsFragment">
         <action
             android:id="@+id/action_permission_fragment_to_gallery_fragment"
-            app:destination="@id/gallery_fragment" >
+            app:destination="@id/gallery_fragment">
             <argument
                 android:name="position"
                 android:defaultValue="0" />
@@ -36,6 +36,8 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_gallery_detail_fragment_to_gallery_fragment"
-            app:destination="@id/gallery_fragment" />
+            app:destination="@id/gallery_fragment"
+            app:launchSingleTop="false"
+            app:popUpToInclusive="false" />
     </fragment>
 </navigation>

@@ -8,7 +8,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.gallerysample.constants.PAGED_LIST_MAX_SIZE
+import com.example.gallerysample.constants.PAGED_LIST_SIZE
 import com.example.gallerysample.data.GalleryDataSourceFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,32 +23,41 @@ class GalleryViewModel(
 ) : AndroidViewModel(application) {
 
     lateinit var uriList: LiveData<PagedList<Uri>>
+    val adapterDataObserver = object : RecyclerView.AdapterDataObserver() {
+        override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+            super.onItemRangeRemoved(positionStart, itemCount)
+            clear()
+        }
+    }
 
-    fun loadPhotoUris() {
+    init {
+        loadPhotoUris()
+    }
+
+    private fun loadPhotoUris() {
         val config = PagedList.Config.Builder()
-            .setPageSize(20)
+            .setPageSize(PAGED_LIST_SIZE)
+            .setMaxSize(PAGED_LIST_MAX_SIZE)
             .setEnablePlaceholders(false)
             .build()
 
 
-        uriList = LivePagedListBuilder<Int, Uri>(
-            GalleryDataSourceFactory(contentResolver),
-            config
-        )
-            .setBoundaryCallback(object : PagedList.BoundaryCallback<Uri>() {
-                override fun onZeroItemsLoaded() {
-                    super.onZeroItemsLoaded()
-                }
+        uriList =
+            LivePagedListBuilder<Int, Uri>(GalleryDataSourceFactory(contentResolver), config)
+                .setBoundaryCallback(object : PagedList.BoundaryCallback<Uri>() {
+                    override fun onZeroItemsLoaded() {
+                        super.onZeroItemsLoaded()
+                    }
 
-                override fun onItemAtFrontLoaded(itemAtFront: Uri) {
-                    super.onItemAtFrontLoaded(itemAtFront)
-                }
+                    override fun onItemAtFrontLoaded(itemAtFront: Uri) {
+                        super.onItemAtFrontLoaded(itemAtFront)
+                    }
 
-                override fun onItemAtEndLoaded(itemAtEnd: Uri) {
-                    super.onItemAtEndLoaded(itemAtEnd)
-                }
-            })
-            .build()
+                    override fun onItemAtEndLoaded(itemAtEnd: Uri) {
+                        super.onItemAtEndLoaded(itemAtEnd)
+                    }
+                })
+                .build()
     }
 
     fun invalidateDataSource() {
