@@ -21,7 +21,7 @@ class PhotoListAdapter(
     }
 
     override fun onBindViewHolder(holder: UriViewHolder, position: Int) {
-        val uri = getItem(position)
+        getItem(position)
             ?.apply {
                 holder.itemView.setOnClickListener {
                     onClickListener.onClick(position)
@@ -30,14 +30,14 @@ class PhotoListAdapter(
             }
     }
 
-    override fun onViewRecycled(holder: UriViewHolder) {
-        super.onViewRecycled(holder)
-        with(holder.binding.photoImage) {
-            Glide.with(context).clear(this)
-            setImageBitmap(null)
-            setImageDrawable(null)
-        }
-    }
+//    override fun onViewRecycled(holder: UriViewHolder) {
+//        super.onViewRecycled(holder)
+//        with(holder.binding.photoImage) {
+//            Glide.with(context).clear(this)
+//            setImageBitmap(null)
+//            setImageDrawable(null)
+//        }
+//    }
 
     class UriViewHolder(val binding: ListItemPhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {

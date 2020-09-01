@@ -7,19 +7,13 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.example.gallerysample.R
-import com.example.gallerysample.utilities.InjectorUtils
 import com.example.gallerysample.utilities.deletePhoto
 import com.example.gallerysample.viewmodels.GalleryViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class PhotoDeleteDialog(private val uri: Uri) : DialogFragment() {
 
-    private val viewModel: GalleryViewModel by activityViewModels {
-        InjectorUtils.provideGalleryViewModelFactory(
-            requireActivity().application,
-            requireContext()
-        )
-    }
+    private val viewModel: GalleryViewModel by activityViewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return MaterialAlertDialogBuilder(requireContext())

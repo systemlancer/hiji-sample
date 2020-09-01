@@ -34,14 +34,14 @@ class PhotoDetailAdapter(
         }
     }
 
-    override fun onViewRecycled(holder: UriViewHolder) {
-        super.onViewRecycled(holder)
-        with(holder.binding.photoImage) {
-            Glide.with(context).clear(this)
-            setImageDrawable(null)
-            setImageBitmap(null)
-        }
-    }
+//    override fun onViewRecycled(holder: UriViewHolder) {
+//        super.onViewRecycled(holder)
+//        with(holder.binding.photoImage) {
+//            Glide.with(context).clear(this)
+//            setImageDrawable(null)
+//            setImageBitmap(null)
+//        }
+//    }
 
     class UriViewHolder(
         val binding: ItemPhotoBinding,

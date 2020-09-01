@@ -75,6 +75,8 @@ dependencies {
     }
     annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
 
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
+
     // timber
     implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
 

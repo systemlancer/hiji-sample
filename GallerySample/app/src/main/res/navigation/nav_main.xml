@@ -23,9 +23,6 @@
         <action
             android:id="@+id/action_gallery_fragment_to_gallery_detail_fragment"
             app:destination="@id/gallery_detail_fragment" />
-        <argument
-            android:name="position"
-            app:argType="integer" />
     </fragment>
 
     <fragment
@@ -34,10 +31,5 @@
         <argument
             android:name="selectedPosition"
             app:argType="integer" />
-        <action
-            android:id="@+id/action_gallery_detail_fragment_to_gallery_fragment"
-            app:destination="@id/gallery_fragment"
-            app:launchSingleTop="false"
-            app:popUpToInclusive="false" />
     </fragment>
 </navigation>
