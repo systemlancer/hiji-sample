@@ -15,8 +15,6 @@ class PhotoDetailAdapter(
 ) :
     PagedListAdapter<Uri, PhotoDetailAdapter.UriViewHolder>(DiffCallback) {
 
-    var currentPosition: Int = 0
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -29,7 +27,6 @@ class PhotoDetailAdapter(
 
     override fun onBindViewHolder(holder: UriViewHolder, position: Int) {
         getItem(position)?.let {
-            currentPosition = position
             holder.bind(it)
         }
     }
@@ -56,8 +53,7 @@ class PhotoDetailAdapter(
             }
         }
     }
-
-
+    
     companion object DiffCallback : DiffUtil.ItemCallback<Uri>() {
         override fun areItemsTheSame(oldItem: Uri, newItem: Uri): Boolean {
             return oldItem == newItem

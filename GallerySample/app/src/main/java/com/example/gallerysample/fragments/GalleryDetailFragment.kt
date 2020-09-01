@@ -35,7 +35,7 @@ class GalleryDetailFragment : Fragment() {
                     }
                 })
 
-                photoDetailAdapter?.submitList(viewModel.uriList.value)
+                photoDetailAdapter.submitList(viewModel.uriList.value)
                 viewPager.adapter = photoDetailAdapter
                 viewPager.currentItem = args.selectedPosition
             }
