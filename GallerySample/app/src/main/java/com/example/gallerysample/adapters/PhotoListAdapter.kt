@@ -24,10 +24,9 @@ class PhotoListAdapter(
     }
 
     override fun onBindViewHolder(holder: UriViewHolder, position: Int) {
-        getItem(position)
-            ?.apply {
-                holder.bind(this)
-            }
+        getItem(position)?.let {
+            holder.bind(it)
+        }
     }
 
     class UriViewHolder(
@@ -41,6 +40,7 @@ class PhotoListAdapter(
                 binding.photoImage.setOnClickListener {
                     onClickListener.onClick(uri.path)
                 }
+
                 Glide.with(binding.photoImage.context)
                     .load(uri)
                     .centerCrop()

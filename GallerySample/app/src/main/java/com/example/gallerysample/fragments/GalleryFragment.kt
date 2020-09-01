@@ -32,7 +32,7 @@ class GalleryFragment : Fragment() {
 
                 photoListAdapter =
                     PhotoListAdapter(PhotoListAdapter.OnClickListener { path ->
-                        val position = viewModel.uriList.value?.indexOfFirst { it.path == path }
+                        val position = viewModel.pathToPosition(path)
                         position?.let {
                             findNavController().navigate(
                                 GalleryFragmentDirections.actionGalleryFragmentToGalleryDetailFragment(
@@ -46,10 +46,8 @@ class GalleryFragment : Fragment() {
                 photosGrid.adapter = photoListAdapter
             }
 
-        viewModel.apply {
-            uriList.observe(viewLifecycleOwner) {
-                photoListAdapter.submitList(it)
-            }
+        viewModel.photoUriList.observe(viewLifecycleOwner) {
+            photoListAdapter.submitList(it)
         }
 
         return binding.root

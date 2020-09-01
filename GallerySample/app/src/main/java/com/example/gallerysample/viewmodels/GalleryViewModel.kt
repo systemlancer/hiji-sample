@@ -14,26 +14,28 @@ class GalleryViewModel(
     private val contentResolver: ContentResolver
 ) : ViewModel() {
 
-    lateinit var uriList: LiveData<PagedList<Uri>>
+    lateinit var photoUriList: LiveData<PagedList<Uri>>
 
     init {
-        loadPhotoUris()
+        loadPhotoUriList()
     }
 
-    private fun loadPhotoUris() {
+    fun pathToPosition(path: String): Int? {
+        return photoUriList.value?.indexOfFirst { it.path == path }
+    }
+
+    fun invalidateDataSource() {
+        photoUriList.value?.dataSource?.invalidate()
+    }
+
+    private fun loadPhotoUriList() {
         val config = PagedList.Config.Builder()
             .setPageSize(PAGED_LIST_SIZE)
             .setMaxSize(PAGED_LIST_MAX_SIZE)
             .setEnablePlaceholders(false)
             .build()
 
-
-        uriList =
-            LivePagedListBuilder(GalleryDataSourceFactory(contentResolver), config)
-                .build()
-    }
-
-    fun invalidateDataSource() {
-        uriList.value?.dataSource?.invalidate()
+        photoUriList =
+            LivePagedListBuilder(GalleryDataSourceFactory(contentResolver), config).build()
     }
 }

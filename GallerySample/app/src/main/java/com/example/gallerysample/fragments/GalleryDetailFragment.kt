@@ -38,15 +38,13 @@ class GalleryDetailFragment : Fragment() {
                         }
                     })
 
-                photoDetailAdapter.submitList(viewModel.uriList.value)
+                photoDetailAdapter.submitList(viewModel.photoUriList.value)
                 viewPager.adapter = photoDetailAdapter
                 viewPager.setCurrentItem(args.selectedPosition, false)
             }
 
-        viewModel.apply {
-            uriList.observe(viewLifecycleOwner) {
-                photoDetailAdapter.submitList(it)
-            }
+        viewModel.photoUriList.observe(viewLifecycleOwner) {
+            photoDetailAdapter.submitList(it)
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {

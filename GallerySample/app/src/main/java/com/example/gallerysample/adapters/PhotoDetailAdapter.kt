@@ -42,6 +42,7 @@ class PhotoDetailAdapter(
                 deleteButton.setOnClickListener {
                     deleteOnClickListener.onClick(uri)
                 }
+
                 Glide.with(binding.photoImage.context)
                     .load(uri)
                     .centerInside()
