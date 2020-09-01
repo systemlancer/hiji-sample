@@ -34,8 +34,7 @@ class PhotoDetailAdapter(
     class UriViewHolder(
         val binding: ItemPhotoBinding,
         private val deleteOnClickListener: DeleteOnClickListener
-    ) :
-        RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(uri: Uri) {
             with(binding) {
@@ -63,7 +62,6 @@ class PhotoDetailAdapter(
         override fun areContentsTheSame(oldItem: Uri, newItem: Uri): Boolean {
             return oldItem == newItem
         }
-
     }
 
     class DeleteOnClickListener(val clickListener: (uri: Uri) -> Unit) {

@@ -38,7 +38,8 @@ class PhotoListAdapter(
         fun bind(uri: Uri) {
             with(binding) {
                 binding.photoImage.setOnClickListener {
-                    onClickListener.onClick(uri.path)
+                    this@UriViewHolder.layoutPosition
+                    onClickListener.onClick(this@UriViewHolder.adapterPosition)
                 }
 
                 Glide.with(binding.photoImage.context)
@@ -64,7 +65,7 @@ class PhotoListAdapter(
         }
     }
 
-    class OnClickListener(val clickListener: (path: String) -> Unit) {
-        fun onClick(path: String?) = path?.let { clickListener(it) }
+    class OnClickListener(val clickListener: (position: Int) -> Unit) {
+        fun onClick(position: Int) = clickListener(position)
     }
 }

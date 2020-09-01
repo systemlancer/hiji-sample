@@ -6,8 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.example.gallerysample.constants.PAGED_LIST_MAX_SIZE
-import com.example.gallerysample.constants.PAGED_LIST_SIZE
 import com.example.gallerysample.data.GalleryDataSourceFactory
 
 class GalleryViewModel(
@@ -18,10 +16,6 @@ class GalleryViewModel(
 
     init {
         loadPhotoUriList()
-    }
-
-    fun pathToPosition(path: String): Int? {
-        return photoUriList.value?.indexOfFirst { it.path == path }
     }
 
     fun invalidateDataSource() {
@@ -37,5 +31,10 @@ class GalleryViewModel(
 
         photoUriList =
             LivePagedListBuilder(GalleryDataSourceFactory(contentResolver), config).build()
+    }
+
+    companion object {
+        private const val PAGED_LIST_MAX_SIZE = 30
+        private const val PAGED_LIST_SIZE = 10
     }
 }

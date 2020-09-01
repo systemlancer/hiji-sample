@@ -31,15 +31,12 @@ class GalleryFragment : Fragment() {
                 lifecycleOwner = viewLifecycleOwner
 
                 photoListAdapter =
-                    PhotoListAdapter(PhotoListAdapter.OnClickListener { path ->
-                        val position = viewModel.pathToPosition(path)
-                        position?.let {
-                            findNavController().navigate(
-                                GalleryFragmentDirections.actionGalleryFragmentToGalleryDetailFragment(
-                                    it
-                                )
+                    PhotoListAdapter(PhotoListAdapter.OnClickListener { position ->
+                        findNavController().navigate(
+                            GalleryFragmentDirections.actionGalleryFragmentToGalleryDetailFragment(
+                                position
                             )
-                        }
+                        )
                     })
 
                 photosGrid.layoutManager?.scrollToPosition(args.position)
