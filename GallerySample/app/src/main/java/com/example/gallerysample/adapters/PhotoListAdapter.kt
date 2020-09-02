@@ -38,7 +38,6 @@ class PhotoListAdapter(
         fun bind(uri: Uri) {
             with(binding) {
                 binding.photoImage.setOnClickListener {
-                    this@UriViewHolder.layoutPosition
                     onClickListener.onClick(this@UriViewHolder.adapterPosition)
                 }
 

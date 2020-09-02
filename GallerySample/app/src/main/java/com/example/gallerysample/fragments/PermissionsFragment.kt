@@ -27,9 +27,7 @@ class PermissionsFragment : Fragment() {
             )
         } else {
             findNavController().navigate(
-                PermissionsFragmentDirections.actionPermissionFragmentToGalleryFragment(
-                    0
-                )
+                PermissionsFragmentDirections.actionPermissionFragmentToGalleryFragment(0)
             )
         }
     }
@@ -42,9 +40,7 @@ class PermissionsFragment : Fragment() {
             if (PackageManager.PERMISSION_GRANTED == grantResults.firstOrNull()) {
                 Toast.makeText(context, "Permission request granted", Toast.LENGTH_LONG).show()
                 findNavController().navigate(
-                    PermissionsFragmentDirections.actionPermissionFragmentToGalleryFragment(
-                        0
-                    )
+                    PermissionsFragmentDirections.actionPermissionFragmentToGalleryFragment(0)
                 )
             } else {
                 Toast.makeText(context, "Permission request denied", Toast.LENGTH_LONG).show()

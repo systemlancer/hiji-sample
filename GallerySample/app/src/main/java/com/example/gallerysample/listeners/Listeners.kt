@@ -28,7 +28,7 @@ val requestListener = object : RequestListener<Drawable> {
         isFirstResource: Boolean
     ): Boolean {
         if (resource is BitmapDrawable) {
-            val bitmap = (resource as BitmapDrawable).bitmap
+            val bitmap = resource.bitmap
             with(bitmap) {
                 val uri = model as Uri
                 Timber.d("bitmap %,d bytes, width $width, height $height path ${uri.path} ${dataSource?.name} $isFirstResource".format(byteCount))
