@@ -4,14 +4,13 @@ import android.content.ContentResolver
 import android.net.Uri
 import android.provider.MediaStore
 
+/**
+ * 外部ストレージからjpeg画像のURIリストを取得する.
+ */
 fun ContentResolver.getPhotoUriList(limit: Int, offset: Int): MutableList<Uri> {
 
-    val projection = arrayOf(
-        MediaStore.MediaColumns._ID,
-        MediaStore.MediaColumns.DISPLAY_NAME
-    )
-    val selection: String? =
-        "${MediaStore.MediaColumns.MIME_TYPE} = ?"
+    val projection = arrayOf(MediaStore.MediaColumns._ID)
+    val selection: String? = "${MediaStore.MediaColumns.MIME_TYPE} = ?"
     val selectionArgs: Array<String>? = arrayOf("image/jpeg")
     val sortOrder = "${MediaStore.MediaColumns.DATE_ADDED} DESC LIMIT $limit OFFSET $offset"
 
@@ -40,6 +39,9 @@ fun ContentResolver.getPhotoUriList(limit: Int, offset: Int): MutableList<Uri> {
     return mediaList
 }
 
+/**
+ * 指定した画像を削除する.
+ */
 fun ContentResolver.deletePhoto(uri: Uri): Boolean {
     var hasDeletedPhoto = false
     val deletedRows = delete(uri, null, null)

@@ -28,13 +28,11 @@ class GalleryDetailFragment : Fragment() {
         val binding = FragmentGalleryDetailBinding.inflate(inflater, container, false)
             .apply {
                 lifecycleOwner = viewLifecycleOwner
+
                 photoDetailAdapter = PhotoDetailAdapter(
                     PhotoDetailAdapter.DeleteOnClickListener {
                         activity?.let { galleryActivity ->
-                            PhotoDeleteDialog(it).show(
-                                galleryActivity.supportFragmentManager,
-                                null
-                            )
+                            PhotoDeleteDialog(it).show(galleryActivity.supportFragmentManager, null)
                         }
                     })
 
@@ -54,7 +52,6 @@ class GalleryDetailFragment : Fragment() {
                 )
             )
         }
-
         return binding.root
     }
 }
