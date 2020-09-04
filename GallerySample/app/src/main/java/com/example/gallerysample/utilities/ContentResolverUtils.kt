@@ -15,7 +15,7 @@ fun ContentResolver.getPhotoUriList(limit: Int, offset: Int): MutableList<Uri> {
     val projection = arrayOf(MediaStore.MediaColumns._ID)
     val selection: String? = "${MediaStore.MediaColumns.MIME_TYPE} = ?"
     val selectionArgs: Array<String>? = arrayOf("image/jpeg")
-    val sortOrder = "${MediaStore.MediaColumns.DATE_ADDED} DESC LIMIT $limit OFFSET $offset"
+    val sortOrder = "${MediaStore.MediaColumns.DATE_MODIFIED} DESC LIMIT $limit OFFSET $offset"
 
     val cursor = query(
         MediaStore.Images.Media.EXTERNAL_CONTENT_URI,

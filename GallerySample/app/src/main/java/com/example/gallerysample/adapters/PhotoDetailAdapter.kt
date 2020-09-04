@@ -7,6 +7,7 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.gallerysample.R
 import com.example.gallerysample.databinding.ItemPhotoBinding
 import com.example.gallerysample.listeners.requestListener
 
@@ -46,6 +47,7 @@ class PhotoDetailAdapter(
                     .load(uri)
                     .centerInside()
                     .listener(requestListener)
+                    .placeholder(R.drawable.loading_animation)
                     .dontAnimate()
                     .dontTransform()
                     .into(binding.photoImage)
