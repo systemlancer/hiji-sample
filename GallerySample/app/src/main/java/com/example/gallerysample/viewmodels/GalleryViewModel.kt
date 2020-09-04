@@ -12,12 +12,18 @@ class GalleryViewModel(
     private val contentResolver: ContentResolver
 ) : ViewModel() {
 
+    /**
+     * 画像のコンテンツURIリスト
+     */
     lateinit var photoUriList: LiveData<PagedList<Uri>>
 
     init {
         loadPhotoUriList()
     }
 
+    /**
+     * データソースを無効化する.
+     */
     fun invalidateDataSource() {
         photoUriList.value?.dataSource?.invalidate()
     }
@@ -34,7 +40,7 @@ class GalleryViewModel(
     }
 
     companion object {
-        private const val PAGED_LIST_MAX_SIZE = 30
-        private const val PAGED_LIST_SIZE = 10
+        private const val PAGED_LIST_MAX_SIZE = 60
+        private const val PAGED_LIST_SIZE = 20
     }
 }

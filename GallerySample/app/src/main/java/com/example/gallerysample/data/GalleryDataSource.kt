@@ -8,6 +8,9 @@ import com.example.gallerysample.utilities.getPhotoUriList
 class GalleryDataSource(private val contentResolver: ContentResolver) :
     PositionalDataSource<Uri>() {
 
+    /**
+     * 初期データリストを読み込みます.
+     */
     override fun loadInitial(params: LoadInitialParams, callback: LoadInitialCallback<Uri>) {
         callback.onResult(
             contentResolver.getPhotoUriList(
@@ -17,6 +20,9 @@ class GalleryDataSource(private val contentResolver: ContentResolver) :
         )
     }
 
+    /**
+     * 一定範囲のデータをロードするために呼び出されます.
+     */
     override fun loadRange(params: LoadRangeParams, callback: LoadRangeCallback<Uri>) {
         callback.onResult(contentResolver.getPhotoUriList(params.loadSize, params.startPosition))
     }

@@ -32,7 +32,10 @@ class GalleryDetailFragment : Fragment() {
                 photoDetailAdapter = PhotoDetailAdapter(
                     PhotoDetailAdapter.DeleteOnClickListener {
                         activity?.let { galleryActivity ->
-                            PhotoDeleteDialog(it).show(galleryActivity.supportFragmentManager, null)
+                            PhotoDeleteDialog(it).show(
+                                galleryActivity.supportFragmentManager,
+                                PHOTO_DELETE_DIALOG
+                            )
                         }
                     })
 
@@ -53,5 +56,9 @@ class GalleryDetailFragment : Fragment() {
             )
         }
         return binding.root
+    }
+
+    companion object {
+        private const val PHOTO_DELETE_DIALOG = "PhotoDeleteDialog"
     }
 }

@@ -1,8 +1,11 @@
 package com.example.gallerysample.utilities
 
+import android.app.RecoverableSecurityException
 import android.content.ContentResolver
 import android.net.Uri
+import android.os.Build
 import android.provider.MediaStore
+import androidx.annotation.RequiresApi
 
 /**
  * 外部ストレージからjpeg画像のURIリストを取得する.
@@ -22,7 +25,7 @@ fun ContentResolver.getPhotoUriList(limit: Int, offset: Int): MutableList<Uri> {
         sortOrder
     )
 
-    val mediaList = mutableListOf<Uri>()
+    val photoUriList = mutableListOf<Uri>()
     cursor?.use { photoListCursor ->
         val idColumn = photoListCursor.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)
         while (photoListCursor.moveToNext()) {
@@ -31,12 +34,12 @@ fun ContentResolver.getPhotoUriList(limit: Int, offset: Int): MutableList<Uri> {
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 id.toString()
             )
-            mediaList.add(contentUri)
+            photoUriList.add(contentUri)
         }
         photoListCursor.close()
     }
 
-    return mediaList
+    return photoUriList
 }
 
 /**
@@ -45,6 +48,23 @@ fun ContentResolver.getPhotoUriList(limit: Int, offset: Int): MutableList<Uri> {
 fun ContentResolver.deletePhoto(uri: Uri): Boolean {
     var hasDeletedPhoto = false
     val deletedRows = delete(uri, null, null)
+    if (deletedRows > 0) {
+        hasDeletedPhoto = true
+    }
+    return hasDeletedPhoto
+}
+
+/**
+ * 指定した画像を削除する.
+ */
+@RequiresApi(Build.VERSION_CODES.Q)
+fun ContentResolver.deletePhotoQ(uri: Uri): Boolean {
+    var hasDeletedPhoto = false
+    val deletedRows = try {
+        delete(uri, null, null)
+    } catch (e: RecoverableSecurityException) {
+        throw e
+    }
     if (deletedRows > 0) {
         hasDeletedPhoto = true
     }

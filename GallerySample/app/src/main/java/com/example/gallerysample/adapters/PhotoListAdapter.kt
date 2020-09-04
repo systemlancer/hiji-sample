@@ -37,17 +37,17 @@ class PhotoListAdapter(
 
         fun bind(uri: Uri) {
             with(binding) {
-                binding.photoImage.setOnClickListener {
+                photoImage.setOnClickListener {
                     onClickListener.onClick(this@UriViewHolder.adapterPosition)
                 }
 
-                Glide.with(binding.photoImage.context)
+                Glide.with(photoImage.context)
                     .load(uri)
                     .centerCrop()
                     .listener(requestListener)
                     .placeholder(R.drawable.loading_animation)
                     .dontAnimate()
-                    .into(binding.photoImage)
+                    .into(photoImage)
                 executePendingBindings()
             }
         }
