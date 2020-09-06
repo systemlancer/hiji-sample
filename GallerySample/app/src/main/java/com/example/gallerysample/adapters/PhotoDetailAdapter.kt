@@ -43,14 +43,14 @@ class PhotoDetailAdapter(
                     deleteOnClickListener.onClick(uri)
                 }
 
-                Glide.with(binding.photoImage.context)
+                Glide.with(photoImage.context)
                     .load(uri)
                     .centerInside()
                     .listener(requestListener)
                     .placeholder(R.drawable.loading_animation)
                     .dontAnimate()
                     .dontTransform()
-                    .into(binding.photoImage)
+                    .into(photoImage)
                 executePendingBindings()
             }
         }
