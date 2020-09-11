@@ -30,22 +30,26 @@ class GalleryDetailFragment : Fragment() {
                 lifecycleOwner = viewLifecycleOwner
 
                 photoDetailAdapter = PhotoDetailAdapter(
-                    PhotoDetailAdapter.DeleteOnClickListener {
+                    PhotoDetailAdapter.DeleteOnClickListener { uri ->
                         activity?.let { galleryActivity ->
-                            PhotoDeleteDialog(it).show(
+                            PhotoDeleteDialog(uri).show(
                                 galleryActivity.supportFragmentManager,
                                 PHOTO_DELETE_DIALOG
                             )
                         }
                     })
 
-                photoDetailAdapter.submitList(viewModel.photoUriList.value)
                 viewPager.adapter = photoDetailAdapter
-                viewPager.setCurrentItem(args.selectedPosition, false)
             }
 
         viewModel.photoUriList.observe(viewLifecycleOwner) {
-            photoDetailAdapter.submitList(it)
+            photoDetailAdapter.submitList(it) {
+                with(binding.viewPager) {
+                    if (currentItem == 0) {
+                        setCurrentItem(args.selectedPosition, false)
+                    }
+                }
+            }
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {

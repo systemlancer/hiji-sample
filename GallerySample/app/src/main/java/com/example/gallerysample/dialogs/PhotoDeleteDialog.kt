@@ -58,7 +58,7 @@ class PhotoDeleteDialog(private val uri: Uri) : DialogFragment() {
             .setNegativeButton(R.string.cancel, null)
             .show()
     }
-    
+
     companion object {
         const val DELETE_PERMISSION_REQUEST = 0x1033
     }

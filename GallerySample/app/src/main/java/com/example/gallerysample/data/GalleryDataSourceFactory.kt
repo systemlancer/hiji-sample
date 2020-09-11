@@ -6,7 +6,10 @@ import androidx.paging.DataSource
 
 class GalleryDataSourceFactory(private val contentResolver: ContentResolver) :
     DataSource.Factory<Int, Uri>() {
+    lateinit var latestSource: GalleryDataSource
+
     override fun create(): DataSource<Int, Uri> {
-        return GalleryDataSource(contentResolver)
+        latestSource = GalleryDataSource(contentResolver)
+        return latestSource
     }
 }

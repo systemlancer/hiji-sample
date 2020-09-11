@@ -3,6 +3,7 @@ package com.example.gallerysample.data
 import android.content.ContentResolver
 import android.net.Uri
 import androidx.paging.PositionalDataSource
+import com.example.gallerysample.utilities.getPhotoTotalCount
 import com.example.gallerysample.utilities.getPhotoUriList
 
 class GalleryDataSource(private val contentResolver: ContentResolver) :
@@ -16,7 +17,8 @@ class GalleryDataSource(private val contentResolver: ContentResolver) :
             contentResolver.getPhotoUriList(
                 params.requestedLoadSize,
                 params.requestedStartPosition
-            ), 0
+            ),
+            params.requestedStartPosition, contentResolver.getPhotoTotalCount()
         )
     }
 

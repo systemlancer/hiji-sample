@@ -43,6 +43,31 @@ fun ContentResolver.getPhotoUriList(limit: Int, offset: Int): MutableList<Uri> {
 }
 
 /**
+ * 外部ストレージのjpeg画像のトータル件数を取得する
+ */
+fun ContentResolver.getPhotoTotalCount(): Int {
+    val projection = arrayOf(MediaStore.MediaColumns._ID)
+    val selection: String? = "${MediaStore.MediaColumns.MIME_TYPE} = ?"
+    val selectionArgs: Array<String>? = arrayOf("image/jpeg")
+
+    val cursor = query(
+        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+        projection,
+        selection,
+        selectionArgs,
+        null
+    )
+
+    var totalCount: Int = 0
+    cursor?.use {
+        totalCount = it.count
+        it.close()
+    }
+
+    return totalCount
+}
+
+/**
  * 指定した画像を削除する.
  */
 fun ContentResolver.deletePhoto(uri: Uri): Boolean {

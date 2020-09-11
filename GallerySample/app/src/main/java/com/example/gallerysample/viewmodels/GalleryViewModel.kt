@@ -9,34 +9,32 @@ import androidx.paging.PagedList
 import com.example.gallerysample.data.GalleryDataSourceFactory
 
 class GalleryViewModel(
-    private val contentResolver: ContentResolver
+    contentResolver: ContentResolver
 ) : ViewModel() {
 
     /**
      * 画像のコンテンツURIリスト
      */
-    lateinit var photoUriList: LiveData<PagedList<Uri>>
+    var photoUriList: LiveData<PagedList<Uri>>
+
+    private var dataSourceFactory = GalleryDataSourceFactory(contentResolver)
 
     init {
-        loadPhotoUriList()
+        val config = PagedList.Config.Builder()
+            .setPageSize(PAGED_LIST_SIZE)
+            .setMaxSize(PAGED_LIST_MAX_SIZE)
+            .setEnablePlaceholders(true)
+            .build()
+
+        photoUriList = LivePagedListBuilder(dataSourceFactory, config)
+            .build()
     }
 
     /**
      * データソースを無効化する.
      */
     fun invalidateDataSource() {
-        photoUriList.value?.dataSource?.invalidate()
-    }
-
-    private fun loadPhotoUriList() {
-        val config = PagedList.Config.Builder()
-            .setPageSize(PAGED_LIST_SIZE)
-            .setMaxSize(PAGED_LIST_MAX_SIZE)
-            .setEnablePlaceholders(false)
-            .build()
-
-        photoUriList =
-            LivePagedListBuilder(GalleryDataSourceFactory(contentResolver), config).build()
+        dataSourceFactory.latestSource.invalidate()
     }
 
     companion object {
